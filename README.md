@@ -5,9 +5,13 @@ Home: https://github.com/simdjson/simdjson
 
 Package license: Apache-2.0
 
-Feedstock license: BSD-3-Clause
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/simdjson-feedstock/blob/master/LICENSE.txt)
 
 Summary: Parsing gigabytes of JSON per second
+
+Development: https://github.com/simdjson/simdjson
+
+Documentation: https://github.com/simdjson/simdjson#quick-start
 
 JSON is everywhere on the Internet.
 Servers spend a *lot* of time parsing it. We need a fresh approach.
