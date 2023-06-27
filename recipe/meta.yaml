@@ -1,5 +1,5 @@
 {% set name = "simdjson" %}
-{% set version = "3.1.8" %}
+{% set version = "3.2.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/simdjson/simdjson/archive/v{{ version }}.tar.gz
-  sha256: 99e7eeb0a0038e0213da68f099e6a8b67bcaeea1586385ec5f752bea85d902d8
+  sha256: 75a684dbbe38cf72b8b3bdbdc430764813f3615899a6029931c26ddd89812da4
 
 build:
   number: 0
