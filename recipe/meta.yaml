@@ -10,7 +10,7 @@ source:
   sha256: 13a702536e051db612cdca82bf8585f2c69d9c6fd156ef291b170f13202c1b4c
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win]
   run_exports:
     - simdjson
@@ -18,11 +18,24 @@ build:
 requirements:
   build:
     - {{ compiler('cxx') }}
+    - cmake
+    - ninja
 
 test:
+  requires:
+    - {{ compiler('cxx') }}
+    - ninja
+    - cmake
+  files:
+    - test/*
   commands:
-    - test -f $PREFIX/include/simdjson.h
-    - test -f $PREFIX/lib/libsimdjson.so
+    - test -f "${PREFIX}/include/simdjson.h"
+    - test -f "${PREFIX}/lib/libsimdjson${SHLIB_EXT}"
+    - test -f "${PREFIX}/lib/cmake/simdjson/simdjson-config.cmake"
+    # Running a test trying to link to the library
+    - cmake -G Ninja -S test/ -B build/ ${CMAKE_ARGS}
+    - cmake --build build/
+    - cmake --build build --target test
 
 about:
   home: https://github.com/simdjson/simdjson

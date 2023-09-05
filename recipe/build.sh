@@ -1,14 +1,13 @@
-#!/bin/bash
-set -e
+#!/usr/bin/env bash
+#
+set -euo pipefail
 
-pushd singleheader
-# simdjson requires c++17
-export CXXFLAGS="$CXXFLAGS --std=c++17 -O2 -fPIC -Wall -Wextra"
-$CXX $CXXFLAGS simdjson.cpp -shared -o libsimdjson.so
-popd
+cmake -B build/ \
+    -G Ninja \
+    -D SIMDJSON_DEVELOPER_MODE=OFF \
+    -D BUILD_SHARED_LIBS=ON \
+    ${CMAKE_ARGS}
 
-# install
-mkdir -p $PREFIX/include
-mkdir -p $PREFIX/lib
-cp singleheader/simdjson.h $PREFIX/include/simdjson.h
-cp singleheader/libsimdjson.so $PREFIX/lib/libsimdjson.so
+cmake --build build/ --parallel "${CPU_COUNT}" --verbose
+
+cmake --install  build/
