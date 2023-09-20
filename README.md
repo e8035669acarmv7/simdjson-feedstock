@@ -1,17 +1,17 @@
-About simdjson-feedstock
-========================
+About simdjson-split-feedstock
+==============================
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/simdjson-feedstock/blob/main/LICENSE.txt)
 
-Home: https://github.com/simdjson/simdjson
+Home: https://simdjson.org/
 
 Package license: Apache-2.0
 
 Summary: Parsing gigabytes of JSON per second
 
-Development: https://github.com/simdjson/simdjson
+Development: https://github.com/simdjson/simdjson/
 
-Documentation: https://github.com/simdjson/simdjson#quick-start
+Documentation: https://simdjson.github.io/simdjson/
 
 JSON is everywhere on the Internet.
 Servers spend a *lot* of time parsing it. We need a fresh approach.
@@ -92,27 +92,28 @@ Current release info
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-simdjson-green.svg)](https://anaconda.org/conda-forge/simdjson) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/simdjson.svg)](https://anaconda.org/conda-forge/simdjson) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/simdjson.svg)](https://anaconda.org/conda-forge/simdjson) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/simdjson.svg)](https://anaconda.org/conda-forge/simdjson) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-simdjson--static-green.svg)](https://anaconda.org/conda-forge/simdjson-static) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/simdjson-static.svg)](https://anaconda.org/conda-forge/simdjson-static) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/simdjson-static.svg)](https://anaconda.org/conda-forge/simdjson-static) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/simdjson-static.svg)](https://anaconda.org/conda-forge/simdjson-static) |
 
-Installing simdjson
-===================
+Installing simdjson-split
+=========================
 
-Installing `simdjson` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
+Installing `simdjson-split` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
 
 ```
 conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `simdjson` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `simdjson, simdjson-static` can be installed with `conda`:
 
 ```
-conda install simdjson
+conda install simdjson simdjson-static
 ```
 
 or with `mamba`:
 
 ```
-mamba install simdjson
+mamba install simdjson simdjson-static
 ```
 
 It is possible to list all of the versions of `simdjson` available on your platform with `conda`:
@@ -182,17 +183,17 @@ Terminology
                   produce the finished article (built conda distributions)
 
 
-Updating simdjson-feedstock
-===========================
+Updating simdjson-split-feedstock
+=================================
 
-If you would like to improve the simdjson recipe or build a new
+If you would like to improve the simdjson-split recipe or build a new
 package version, please fork this repository and submit a PR. Upon submission,
 your changes will be run on the appropriate platforms to give the reviewer an
 opportunity to confirm that the changes result in a successful build. Once
 merged, the recipe will be re-built and uploaded automatically to the
 `conda-forge` channel, whereupon the built conda packages will be available for
 everybody to install and use from the `conda-forge` channel.
-Note that all branches in the conda-forge/simdjson-feedstock are
+Note that all branches in the conda-forge/simdjson-split-feedstock are
 immediately built and any created packages are uploaded, so PRs should be based
 on branches in forks and branches in the main repository should only be used to
 build distinct package versions.
@@ -207,5 +208,7 @@ In order to produce a uniquely identifiable distribution:
 Feedstock Maintainers
 =====================
 
+* [@AntoinePrv](https://github.com/AntoinePrv/)
+* [@JohanMabille](https://github.com/JohanMabille/)
 * [@elbaro](https://github.com/elbaro/)
 

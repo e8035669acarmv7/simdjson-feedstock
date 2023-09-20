@@ -1,18 +1,23 @@
-{% set name = "simdjson" %}
-{% set version = "3.2.3" %}
+{% set version = "3.3.0" %}
+{% set sha256 = "a8c9feff2f19c3ff281d42f0b6b4b18f02236513b99229756fa9a1b14787a58a" %}
+
+# For dispatching between Unix and Windows
+{% set install_prefix = "." %}        # [unix]
+{% set install_prefix = "Library" %}  # [win]
+{% set shlib_ext = "so" %}     # [linux]
+{% set shlib_ext = "dylib" %}  # [unix and not linux]
+{% set shlib_ext = "dll" %}    # [win]
 
 package:
-  name: {{ name|lower }}
+  name: simdjson-split
   version: {{ version }}
 
 source:
   url: https://github.com/simdjson/simdjson/archive/v{{ version }}.tar.gz
-  sha256: ab72701b8560c4f93a5de525657b3bf34094f99a1e63bd9db3195d1bcb90aa09
+  sha256: "{{ sha256 }}"
 
 build:
-  number: 1
-  run_exports:
-    - simdjson
+  number: 0
 
 requirements:
   build:
@@ -20,28 +25,69 @@ requirements:
     - cmake
     - ninja
 
-test:
-  requires:
-    - {{ compiler('cxx') }}
-    - ninja
-    - cmake
-  files:
-    - test/*
-  commands:
-    - test -f "${PREFIX}/include/simdjson.h"                                    # [unix]
-    - test -f "${PREFIX}/lib/libsimdjson${SHLIB_EXT}"                           # [unix]
-    - test -f "${PREFIX}/lib/cmake/simdjson/simdjson-config.cmake"              # [unix]
-    - if not exist %LIBRARY_INC%\simdjson.h (exit 1)                            # [win]
-    - if not exist %LIBRARY_BIN%\simdjson.dll (exit 1)                          # [win]
-    - if not exist %LIBRARY_LIB%\cmake\simdjson\simdjson-config.cmake (exit 1)  # [win]
-    # Running a test trying to link to the library
-    - cmake -G Ninja -S test/ -B build/ ${CMAKE_ARGS}  # [unix]
-    - cmake -G Ninja -S test/ -B build/ %CMAKE_ARGS%   # [win]
-    - cmake --build build/
-    - cmake --build build --target test
+outputs:
+  - name: simdjson
+    files:
+      - "{{ install_prefix }}/include/simdjson*"
+      - "{{ install_prefix }}/lib/libsimdjson*.{{ shlib_ext }}*"  # [unix]
+      - "{{ install_prefix }}/bin/simdjson.dll"                   # [win]
+      - "{{ install_prefix }}/lib/simdjson.lib"                   # [win]
+      - "{{ install_prefix }}/lib/pkgconfig/simdjson*"
+      - "{{ install_prefix }}/lib/cmake/simdjson/simdjsonTargets*"
+      - "{{ install_prefix }}/lib/cmake/simdjson/simdjson-config*"
+    build:
+      run_exports:
+        - {{ pin_subpackage('simdjson', max_pin='x.x') }}
+    requirements:
+      build:
+        - {{ compiler('cxx') }}
+        - cmake
+        - ninja
+    test:
+      requires:
+        - {{ compiler('cxx') }}
+        - cmake
+        - ninja
+      files:
+        - test/*
+      commands:
+        - test -f "${PREFIX}/include/simdjson.h"                                    # [unix]
+        - test -f "${PREFIX}/lib/libsimdjson${SHLIB_EXT}"                           # [unix]
+        - test -f "${PREFIX}/lib/cmake/simdjson/simdjson-config.cmake"              # [unix]
+        - if not exist %LIBRARY_INC%\simdjson.h (exit 1)                            # [win]
+        - if not exist %LIBRARY_BIN%\simdjson.dll (exit 1)                          # [win]
+        - if not exist %LIBRARY_LIB%\simdjson.lib (exit 1)                          # [win]
+        - if not exist %LIBRARY_LIB%\cmake\simdjson\simdjson-config.cmake (exit 1)  # [win]
+        # Running a test trying to link to the library
+        - cmake -G Ninja -S test/ -B build/ -D TEST_TARGET=simdjson ${CMAKE_ARGS}  # [unix]
+        - cmake -G Ninja -S test/ -B build/ -D TEST_TARGET=simdjson %CMAKE_ARGS%   # [win]
+        - cmake --build build/
+        - cmake --build build --target test
+
+  - name: simdjson-static
+    files:
+      - "{{ install_prefix }}/lib/libsimdjson_static.a"    # [unix]
+      - "{{ install_prefix }}/lib/simdjson_static.lib"     # [win]
+      - "{{ install_prefix }}/lib/cmake/simdjson/simdjson_staticTargets*"
+    requirements:
+      run:
+        - {{ pin_subpackage('simdjson', exact='True') }}
+    test:
+      requires:
+        - {{ compiler('cxx') }}
+        - cmake
+        - ninja
+      files:
+        - test/*
+      commands:
+        # Running a test trying to link to the library
+        - cmake -G Ninja -S test/ -B build/ -D TEST_TARGET=simdjson_static ${CMAKE_ARGS}  # [unix]
+        - cmake -G Ninja -S test/ -B build/ -D TEST_TARGET=simdjson_static %CMAKE_ARGS%   # [win]
+        - cmake --build build/
+        - cmake --build build --target test
 
 about:
-  home: https://github.com/simdjson/simdjson
+  home: https://simdjson.org/
   license: Apache-2.0
   license_file: LICENSE
   summary: Parsing gigabytes of JSON per second
@@ -51,8 +97,8 @@ about:
     Servers spend a *lot* of time parsing it. We need a fresh approach.
     The simdjson library uses commonly available SIMD instructions and
     microparallel algorithms to parse JSON 2.5x faster than anything else out there.
-  doc_url: https://github.com/simdjson/simdjson#quick-start
-  dev_url: https://github.com/simdjson/simdjson
+  doc_url: https://simdjson.github.io/simdjson/
+  dev_url: https://github.com/simdjson/simdjson/
 
 extra:
   recipe-maintainers:
