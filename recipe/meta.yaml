@@ -14,7 +14,7 @@ package:
 
 source:
   url: https://github.com/simdjson/simdjson/archive/v{{ version }}.tar.gz
-  sha256: "{{sha256}}"
+  sha256: "{{ sha256 }}"
 
 build:
   number: 0
