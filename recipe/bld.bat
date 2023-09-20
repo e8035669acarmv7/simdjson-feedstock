@@ -1,6 +1,7 @@
 cmake -B build/ ^
     -G "Ninja" ^
     -D SIMDJSON_DEVELOPER_MODE=OFF ^
+    -D SIMDJSON_BUILD_STATIC_LIB=ON ^
     -D BUILD_SHARED_LIBS=ON ^
     %CMAKE_ARGS%
 if errorlevel 1 exit 1
