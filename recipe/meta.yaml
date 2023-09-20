@@ -41,7 +41,7 @@ test:
     - cmake --build build --target test
 
 about:
-  home: https://github.com/simdjson/simdjson
+  home: https://simdjson.org/
   license: Apache-2.0
   license_file: LICENSE
   summary: Parsing gigabytes of JSON per second
@@ -51,8 +51,8 @@ about:
     Servers spend a *lot* of time parsing it. We need a fresh approach.
     The simdjson library uses commonly available SIMD instructions and
     microparallel algorithms to parse JSON 2.5x faster than anything else out there.
-  doc_url: https://github.com/simdjson/simdjson#quick-start
-  dev_url: https://github.com/simdjson/simdjson
+  doc_url: https://simdjson.github.io/simdjson/
+  dev_url: https://github.com/simdjson/simdjson/
 
 extra:
   recipe-maintainers:
