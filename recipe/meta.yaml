@@ -1,4 +1,5 @@
-{% set version = "3.2.3" %}
+{% set version = "3.3.0" %}
+{% set sha256 = "a8c9feff2f19c3ff281d42f0b6b4b18f02236513b99229756fa9a1b14787a58a" %}
 
 # For dispatching between Unix and Windows
 {% set install_prefix = "." %}        # [unix]
@@ -12,13 +13,11 @@ package:
   version: {{ version }}
 
 source:
-  # url: https://github.com/simdjson/simdjson/archive/v{{ version }}.tar.gz
-  # sha256: ab72701b8560c4f93a5de525657b3bf34094f99a1e63bd9db3195d1bcb90aa09
-  git_url: https://github.com/AntoinePrv/simdjson.git
-  git_rev: static-lib
+  url: https://github.com/simdjson/simdjson/archive/v{{ version }}.tar.gz
+  sha256: "{{sha256}}"
 
 build:
-  number: 2
+  number: 0
 
 requirements:
   build:
