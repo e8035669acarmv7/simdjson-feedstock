@@ -31,7 +31,8 @@ outputs:
     files:
       - "{{ install_prefix }}/include/simdjson*"
       - "{{ install_prefix }}/lib/libsimdjson*.{{ shlib_ext }}*"  # [unix]
-      - "{{ install_prefix }}/lib/libsimdjson.lib"                # [win]
+      - "{{ install_prefix }}/bin/simdjson.dll"                   # [win]
+      - "{{ install_prefix }}/lib/simdjson.lib"                   # [win]
       - "{{ install_prefix }}/lib/pkgconfig/simdjson*"
       - "{{ install_prefix }}/lib/cmake/simdjson/simdjsonTargets*"
       - "{{ install_prefix }}/lib/cmake/simdjson/simdjson-config*"
@@ -56,6 +57,7 @@ outputs:
         - test -f "${PREFIX}/lib/cmake/simdjson/simdjson-config.cmake"              # [unix]
         - if not exist %LIBRARY_INC%\simdjson.h (exit 1)                            # [win]
         - if not exist %LIBRARY_BIN%\simdjson.dll (exit 1)                          # [win]
+        - if not exist %LIBRARY_LIB%\simdjson.lib (exit 1)                          # [win]
         - if not exist %LIBRARY_LIB%\cmake\simdjson\simdjson-config.cmake (exit 1)  # [win]
         # Running a test trying to link to the library
         - cmake -G Ninja -S test/ -B build/ -D TEST_TARGET=simdjson ${CMAKE_ARGS}  # [unix]
@@ -66,7 +68,7 @@ outputs:
   - name: simdjson-static
     files:
       - "{{ install_prefix }}/lib/libsimdjson_static.a"    # [unix]
-      - "{{ install_prefix }}/lib/libsimdjson_static.lib"  # [win]
+      - "{{ install_prefix }}/lib/simdjson_static.lib"     # [win]
       - "{{ install_prefix }}/lib/cmake/simdjson/simdjson_staticTargets*"
     requirements:
       run:
