@@ -1,12 +1,12 @@
-{% set version = "3.3.0" %}
-{% set sha256 = "a8c9feff2f19c3ff281d42f0b6b4b18f02236513b99229756fa9a1b14787a58a" %}
+{% set version = "3.4.0" %}
+{% set sha256 = "5802702e72d0b615627af33b15dc50bcb55e6acb17193c95078581dd806e50e4" %}
 
 # For dispatching between Unix and Windows
-{% set install_prefix = "." %}        # [unix]
+{% set install_prefix = "." %}  # [unix]
 {% set install_prefix = "Library" %}  # [win]
-{% set shlib_ext = "so" %}     # [linux]
+{% set shlib_ext = "so" %}  # [linux]
 {% set shlib_ext = "dylib" %}  # [unix and not linux]
-{% set shlib_ext = "dll" %}    # [win]
+{% set shlib_ext = "dll" %}  # [win]
 
 package:
   name: simdjson-split
